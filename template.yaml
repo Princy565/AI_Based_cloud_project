@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AI-Based Document Summarization System (S3 + Lambda + API Gateway + Bedrock)
+
+Parameters:
+  ModelId:
+    Type: String
+    Default: amazon.nova-lite-v1:0
+    Description: Bedrock model or inference profile ID (must support document input)
+
+Resources:
+  DocsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: ExpireUploads
+            Status: Enabled
+            ExpirationInDays: 1
+      CorsConfiguration:
+        CorsRules:
+          - AllowedMethods: [PUT]
+            AllowedOrigins: ['*']
+            AllowedHeaders: ['*']
+
+  Api:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins: ['*']
+        AllowHeaders: ['*']
+        AllowMethods: [POST, OPTIONS]
+
+  SummarizerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/
+      Handler: app.handler
+      Runtime: python3.12
+      Timeout: 29
+      MemorySize: 512
+      Environment:
+        Variables:
+          BUCKET: !Ref DocsBucket
+          MODEL_ID: !Ref ModelId
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref DocsBucket
+        - Statement:
+            - Effect: Allow
+              Action: [bedrock:InvokeModel]
+              Resource: '*'
+      Events:
+        UploadUrl:
+          Type: HttpApi
+          Properties: {ApiId: !Ref Api, Path: /upload-url, Method: POST}
+        Summarize:
+          Type: HttpApi
+          Properties: {ApiId: !Ref Api, Path: /summarize, Method: POST}
+
+Outputs:
+  ApiUrl:
+    Description: Paste this into frontend/config.js
+    Value: !Sub https://${Api}.execute-api.${AWS::Region}.amazonaws.com
+  BucketName:
+    Value: !Ref DocsBucket

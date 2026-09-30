@@ -1,0 +1,31 @@
+:root{--bg:#e9eef5;--ink:#14213d;--muted:#5b6b86;--panel:#fff;--line:#c9d3e3;--accent:#2f5bea;--mark:#f2b84b;--err:#b3261e}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1729;--ink:#e6ecf7;--muted:#93a3c0;--panel:#17223b;--line:#2b3a5c;--accent:#7b9cff;--err:#ff8a80}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:56px 20px 80px}
+header h1{font:600 clamp(3rem,10vw,5rem)/1 "Newsreader",Georgia,serif;letter-spacing:-.03em;margin:0 0 8px;
+  background:linear-gradient(transparent 62%,var(--mark) 62% 90%,transparent 90%);display:inline-block}
+header p{margin:8px 0 32px;color:var(--muted);font-size:1.1rem}
+.panel,.result{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}
+.drop{display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center;padding:36px 16px;border:2px dashed var(--line);border-radius:8px;cursor:pointer}
+.drop:hover,.drop.over,.drop:focus-visible{border-color:var(--accent);outline:none}
+.drop span{color:var(--muted);font-size:.9rem}
+.row{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end;margin-top:20px}
+fieldset{border:0;padding:0;margin:0;display:flex;gap:16px;flex-wrap:wrap}
+legend{font-size:.85rem;color:var(--muted);margin-bottom:6px;padding:0}
+fieldset label{cursor:pointer}
+button{font:inherit;font-weight:500;border:0;border-radius:6px;padding:11px 20px;background:var(--accent);color:#fff;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--line);padding:6px 12px;font-size:.85rem}
+#status{min-height:1.5em;margin:16px 0 0;color:var(--muted)}
+#status.error{color:var(--err)}
+.result{margin-top:24px}
+.result-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.result h2{margin:0;font:600 1.4rem "Newsreader",Georgia,serif;overflow-wrap:anywhere}
+#summary{font:400 1.15rem/1.7 "Newsreader",Georgia,serif;max-width:64ch}
+#summary p{margin:.6em 0}
+#summary ul{margin:.5em 0;padding-left:1.2em}
+.spin{display:inline-block;width:.9em;height:.9em;margin-right:8px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:s .8s linear infinite;vertical-align:-2px}
+@keyframes s{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}

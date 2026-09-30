@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digest – AI Document Summarizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Digest</h1>
+      <p>Drop in a document. Get the short version back.</p>
+    </header>
+
+    <section class="panel">
+      <label id="drop" class="drop" tabindex="0">
+        <input id="file" type="file" accept=".pdf,.txt,.md,.csv,.doc,.docx,.xls,.xlsx,.html" hidden>
+        <strong id="drop-title">Choose a file or drag it here</strong>
+        <span id="drop-hint">PDF, Word, Excel, TXT, Markdown, CSV, HTML · up to 4.5 MB</span>
+      </label>
+
+      <div class="row">
+        <fieldset>
+          <legend>Summary length</legend>
+          <label><input type="radio" name="length" value="short"> Short</label>
+          <label><input type="radio" name="length" value="medium" checked> Medium</label>
+          <label><input type="radio" name="length" value="detailed"> Detailed</label>
+        </fieldset>
+        <button id="go" disabled>Summarize document</button>
+      </div>
+      <p id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="result" class="result" hidden>
+      <div class="result-head">
+        <h2 id="result-title">Summary</h2>
+        <button id="copy" class="ghost">Copy summary</button>
+      </div>
+      <div id="summary"></div>
+    </section>
+  </main>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+{"CORSRules":[{"AllowedMethods":["PUT","GET","HEAD"],"AllowedOrigins":["*"],"AllowedHeaders":["*"],"ExposeHeaders":["ETag"]}]}

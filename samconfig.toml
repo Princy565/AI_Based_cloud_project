@@ -1,0 +1,13 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "doc-summarizer"
+resolve_s3 = true
+s3_prefix = "doc-summarizer"
+region = "ap-southeast-1"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "ModelId=\"amazon.nova-lite-v1:0\""
+image_repositories = []
+
+[default.global.parameters]
+region = "ap-southeast-1"
